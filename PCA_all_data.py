@@ -36,12 +36,13 @@ pca = TruncatedSVD(n_components=256)
 reduced_tfidfs = pca.fit_transform(train_tfidfs, pd.concat([y_train, y_train]))
 
 # Take some statistics from the PCA
-explained_variance = np.cumsum(pca.explained_variance_)
-singular_values = np.cumsum(pca.singular_values_)
+explained_variance = pca.explained_variance_ratio_
+singular_values = pca.singular_values_
 
 # Plot the explained variance
 plt.figure()
 explained_variance_plt = plt.plot(explained_variance)
+plt.title('Variance Explained by Number of Components')
 plt.xlabel('Number of Components')
 plt.ylabel('Explained Variance')
 plt.savefig("./Figures/ExplainedVariance.png", dpi=700)
@@ -49,6 +50,7 @@ plt.savefig("./Figures/ExplainedVariance.png", dpi=700)
 # Plot the singular values
 plt.figure()
 singular_values_plt = plt.plot(singular_values)
+plt.title('Singular Values by Number of Components')
 plt.xlabel('Number of Components')
 plt.ylabel('Singular Values')
 plt.savefig("./Figures/SingularValues.png", dpi=700)
